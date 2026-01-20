@@ -225,14 +225,14 @@ func ClaimConfidence(claim *Claim, store *ReputationStore) float64 {
 
 // ExportRecord exports a reputation record for portability
 type ExportedReputation struct {
-	WitnessID      string                       `json:"witness_id"`
-	TotalClaims    int64                        `json:"total_claims"`
-	AgreedClaims   int64                        `json:"agreed_claims"`
-	DisputedClaims int64                        `json:"disputed_claims"`
-	Score          float64                      `json:"score"`
-	Domains        map[string]ExportedDomain    `json:"domains,omitempty"`
-	FirstSeen      time.Time                    `json:"first_seen"`
-	LastSeen       time.Time                    `json:"last_seen"`
+	WitnessID      string                    `json:"witness_id"`
+	TotalClaims    int64                     `json:"total_claims"`
+	AgreedClaims   int64                     `json:"agreed_claims"`
+	DisputedClaims int64                     `json:"disputed_claims"`
+	Score          float64                   `json:"score"`
+	Domains        map[string]ExportedDomain `json:"domains,omitempty"`
+	FirstSeen      time.Time                 `json:"first_seen"`
+	LastSeen       time.Time                 `json:"last_seen"`
 }
 
 type ExportedDomain struct {
