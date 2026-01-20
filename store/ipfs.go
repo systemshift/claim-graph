@@ -40,8 +40,10 @@ func NewIPFSStore(cfg IPFSConfig) (*IPFSStore, error) {
 	}
 
 	s := &IPFSStore{
-		cfg:       cfg,
-		client:    &http.Client{},
+		cfg: cfg,
+		client: &http.Client{
+			Timeout: 30 * time.Second, // Prevent hanging on DHT lookups
+		},
 		index:     make(map[string]*claim.Claim),
 		byWitness: make(map[string][]string),
 		byDomain:  make(map[string][]string),
@@ -239,16 +241,10 @@ func (s *IPFSStore) Has(ctx context.Context, cid string) (bool, error) {
 	_, exists := s.index[cid]
 	s.mu.RUnlock()
 
-	if exists {
-		return true, nil
-	}
-
-	// Try to fetch from IPFS
-	_, err := s.Get(ctx, cid)
-	if err != nil {
-		return false, nil
-	}
-	return true, nil
+	// Only check local index - we cannot query IPFS by computed CID
+	// since the computed CID differs from the IPFS storage hash.
+	// The local index is the source of truth for this store instance.
+	return exists, nil
 }
 
 func (s *IPFSStore) List(ctx context.Context, filter *Filter) ([]string, error) {
