@@ -1,4 +1,4 @@
-package main
+package claimgraph_test
 
 import (
 	"fmt"

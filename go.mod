@@ -6,6 +6,7 @@ require (
 	github.com/ipfs/go-cid v0.4.1
 	github.com/multiformats/go-multihash v0.2.3
 	github.com/stretchr/testify v1.11.1
+	github.com/systemshift/dag-time v0.0.0
 )
 
 require (
